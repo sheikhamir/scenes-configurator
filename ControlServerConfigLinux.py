@@ -38,7 +38,7 @@ class App(customtkinter.CTk):
         self.geometry(WINDOW_SIZE)
         self.resizable(False, False)
         self.configure(fg_color='#000')
-        self.iconbitmap(self.resource_path("favicon.ico"))
+        self.iconbitmap(self.resource_path("favicon.xbm"))
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
