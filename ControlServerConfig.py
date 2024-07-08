@@ -96,7 +96,7 @@ class App(customtkinter.CTk):
         return customtkinter.CTkEntry(master, placeholder_text=placeholder, font=customtkinter.CTkFont(size=22), height=40)
 
     def add_save_button(self):
-        self.button_save = customtkinter.CTkButton(master=self.frame, text="Save and run", font=customtkinter.CTkFont(size=22), height=50, fg_color="#AF8D61", hover_color="#C7975E", text_color="#000", command=self.submit, corner_radius=0)
+        self.button_save = customtkinter.CTkButton(master=self.frame, text="Save and run", font=customtkinter.CTkFont(size=22), height=50, fg_color="#AF8D61", hover_color="#C7975E", text_color="#000", text_color_disabled="#000", command=self.submit, corner_radius=0)
         self.button_save.grid(row=8, column=0, pady=(PAD * 4, 0), sticky="ew")
 
     def add_footer(self):
@@ -107,12 +107,12 @@ class App(customtkinter.CTk):
         self.label_copyright.grid(row=2, column=0, padx=(PAD * 2, 0), sticky="w")
 
     def add_progress_bar(self):
-        self.progress_bar = customtkinter.CTkProgressBar(master=self.frame, orientation="horizontal", corner_radius=0)
-        self.progress_bar.grid(row=9, column=0, sticky="ew")
+        self.progress_bar = customtkinter.CTkProgressBar(master=self.frame, orientation="horizontal", corner_radius=0, progress_color="#C7975E", fg_color="#000")
+        self.progress_bar.grid(row=9, column=0, pady=(PAD * 3, 0), sticky="ew")
 
     def add_log_textbox(self):
-        self.textbox_log = customtkinter.CTkTextbox(master=self.frame, height=100, wrap='word', font=customtkinter.CTkFont(size=LOG_FONT_SIZE), state='disabled', corner_radius=0, fg_color="transparent", text_color="gray35")
-        self.textbox_log.grid(row=10, column=0, pady=(PAD * 3.5, 0), sticky="ew")
+        self.textbox_log = customtkinter.CTkTextbox(master=self.frame, height=60, wrap='word', font=customtkinter.CTkFont(size=LOG_FONT_SIZE), state='disabled', corner_radius=0, fg_color="transparent", text_color="gray35")
+        self.textbox_log.grid(row=10, column=0, pady=(PAD * 3, 0), sticky="ew")
 
     def log_message(self, message):
         self.textbox_log.configure(state="normal")
@@ -124,6 +124,9 @@ class App(customtkinter.CTk):
         self.progress_bar.configure(mode="indeterminnate")
         self.progress_bar.start()
 
+    def disable_submit_btn(self):
+        self.button_save.configure(state='disabled', text="Working...")
+
     def get_ip_address(self):
         hostname = socket.gethostname()
         ip_address = socket.gethostbyname(hostname)
@@ -132,6 +135,7 @@ class App(customtkinter.CTk):
     def submit(self):
         self.add_progress_bar()
         self.start_progress_bar()
+        self.disable_submit_btn()
         self.log_message("Login button pressed")
         print("Login")
 
